@@ -14,7 +14,7 @@ function fetchData(url) {
 
 fetchData('https://randomuser.me/api/?results=12&nat=US')
     .then(data => {
-        generateGallery(data.results);
+        galleryHTML(data.results);
         modalListener(data.results);
         generateSearch();
     })
@@ -35,7 +35,7 @@ fetchData('https://randomuser.me/api/?results=12&nat=US')
  * Gallery
  */
 
-function generateGallery(data) {
+function galleryHTML(data) {
     const employees = data.map(user => `
         <div class='card'>
             <div class='card-img-container'>
@@ -56,8 +56,9 @@ function generateGallery(data) {
 
 // Creates HTML for modal window
 
+const modalContainer = document.createElement('DIV');
+
 function modalHTML(data, i) {
-    const modalContainer = document.createElement('DIV');
     modalContainer.className = 'modal-container';
     let modal = `
     <div class='modal'>
@@ -79,6 +80,7 @@ function modalHTML(data, i) {
     </div>`;
     modalContainer.innerHTML = modal;
 
+    modalSwitch(data, i);
 
     return modalContainer;
 }
@@ -92,6 +94,30 @@ function modalListener(data) {
             document.querySelector('body').appendChild(modalHTML(data, i));
         });
     }
+}
+
+// Switches between modals
+
+function modalSwitch(data, i) {
+    const card = gallery.querySelectorAll('.card');
+
+    const prev = modalContainer.querySelector('.modal-prev');
+    prev.addEventListener('click', (e) => {
+        if(i > 0) {
+            modalHTML(data, i - 1);
+        } else {
+            modalHTML(data, i + (card.length - 1));
+        }
+    })
+
+    const next = modalContainer.querySelector('.modal-next');
+    next.addEventListener('click', (e) => {
+        if(i < card.length - 1) {
+            modalHTML(data, i + 1);
+        } else {
+            modalHTML(data, i - (card.length - 1));
+        }
+    })
 }
 
 // Close the Modal Window
@@ -155,9 +181,14 @@ function employeeFilter() {
                 employeeList[i].className = 'card hide';
             }
         }
+
         if(matchedEmployees.length === 0) {
             if(!errorCheck) {
                 generateError();
+            }
+        } else {
+            if(errorCheck) {
+                gallery.removeChild(errorCheck);
             }
         }
     })
