@@ -1,4 +1,4 @@
-const search = document.getElementById('search-container');
+const search = document.querySelector('.search-container');
 const gallery = document.getElementById('gallery');
 
 /**
@@ -12,11 +12,11 @@ function fetchData(url) {
         .catch(error => console.log('There was a problem', error))
 }
 
-fetchData('https://randomuser.me/api/?results=12')
+fetchData('https://randomuser.me/api/?results=12&nat=US')
     .then(data => {
-        console.log(data);
-        generateGallery(data.results)
+        generateGallery(data.results);
         modalListener(data.results);
+        generateSearch();
     })
 
 /**
@@ -72,8 +72,14 @@ function modalHTML(data, i) {
             <p class="modal-text">${data[i].location.street.number} ${data[i].location.street.name}, ${data[i].location.city}, ${data[i].location.state} ${data[i].location.postcode}</p>
             <p class="modal-text">Birthday: ${formatBirthday(data[i].dob.date)}</p>
         </div>
-    </div>`
+        <div class='modal-btn-container'>
+            <button type='button' id='modal-prev' class='modal-prev btn'>Prev</button>
+            <button type='button' id='modal-next' class='modal-next btn'>Next</button>
+        </div>
+    </div>`;
     modalContainer.innerHTML = modal;
+
+
     return modalContainer;
 }
 
@@ -115,4 +121,52 @@ function formatBirthday(data) {
     let year = date.getFullYear();
     let birthday = `${month}/${day}/${year}`
     return birthday;
+}
+
+/**
+ *  Search
+ */
+
+const errorCheck = document.querySelector('#error-container');
+
+function generateSearch() {
+    search.innerHTML = `
+    <form action='#' method='get'>
+        <input type='search' id='search-input' class='search-input' placeholder='Search...'>
+        <input type='submit' value="&#x1F50D;" id='search-submit' class='search-submit'>
+    </form>`;
+
+    employeeFilter();
+}
+
+function employeeFilter() {
+    search.addEventListener('keyup', (e) => {
+        const employeeList = document.querySelectorAll('.card');
+        const matchedEmployees = [];
+
+        for(let i = 0; i < employeeList.length; i++) {
+            let name = employeeList[i].querySelector('#name').textContent.toLowerCase();
+            if(name.includes(e.target.value.toLowerCase())) {
+                employeeList[i].style.display = '';
+                employeeList[i].className = 'card';
+                matchedEmployees.push(employeeList[i]);
+            } else {
+                employeeList[i].style.display = 'none';
+                employeeList[i].className = 'card hide';
+            }
+        }
+        if(matchedEmployees.length === 0) {
+            if(!errorCheck) {
+                generateError();
+            }
+        }
+    })
+}
+
+function generateError() {
+    const error = `
+    <div id='error-container'>
+        <h3 id='error'>Sorry, no results were found</h3>
+    </div>`;
+    gallery.innerHTML = error;
 }
