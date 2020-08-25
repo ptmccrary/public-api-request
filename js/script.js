@@ -153,8 +153,6 @@ function formatBirthday(data) {
  *  Search
  */
 
-const errorCheck = document.querySelector('#error-container');
-
 function generateSearch() {
     search.innerHTML = `
     <form action='#' method='get'>
@@ -182,6 +180,7 @@ function employeeFilter() {
             }
         }
 
+        const errorCheck = document.querySelector('.error-container');
         if(matchedEmployees.length === 0) {
             if(!errorCheck) {
                 generateError();
@@ -195,9 +194,8 @@ function employeeFilter() {
 }
 
 function generateError() {
-    const error = `
-    <div id='error-container'>
-        <h3 id='error'>Sorry, no results were found</h3>
-    </div>`;
-    gallery.innerHTML = error;
+    const error = document.createElement('DIV');
+    error.className = 'error-container';
+    error.innerHTML = `<h3 id='error'>Sorry, no results were found</h3>`;
+    gallery.appendChild(error);
 }
