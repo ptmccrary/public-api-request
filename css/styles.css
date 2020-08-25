@@ -92,6 +92,7 @@ header h1 {
     border: 1px solid rgba(50, 50, 50, 0.3);
     transition: .4s ease-out;
     overflow: hidden;
+    box-shadow: 2px 2px 2px 2px grey;
 }
 
 .card-img {
@@ -146,6 +147,10 @@ header h1 {
     transition: .4s ease-out;
 }
 
+.modal-info-container {
+    border-style: ridge;
+}
+
 .modal-close-btn {
     position: absolute;
     top: 15px;
@@ -190,7 +195,7 @@ header h1 {
     margin: 10px auto auto;
     background: rgba(255, 255, 255, 1);
     border-radius: 0.25em;
-    border: 1px solid rgba(100, 100, 100, 0.3);
+    border-style: ridge
 }
 
 
@@ -248,7 +253,7 @@ header h1 {
 @media (min-width: 1024px) {
 
     .card:hover {
-        background: rgba(255, 255, 255, 1);
+        background: rgb(255, 251, 188);
         border: 1px solid rgba(50, 50, 50, 0.9);
     }
 

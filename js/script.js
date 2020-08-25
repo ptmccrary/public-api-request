@@ -36,6 +36,8 @@ fetchData('https://randomuser.me/api/?results=12&nat=US')
  * Gallery
  */
 
+// Creates HTML for the user gallery
+
 function galleryHTML(data) {
     const employees = data.map(user => `
         <div class='card'>
@@ -159,6 +161,8 @@ function formatBirthday(data) {
  *  Search
  */
 
+// Creates search bar HTML
+
 function generateSearch() {
     search.innerHTML = `
     <form action='#' method='get'>
@@ -168,6 +172,8 @@ function generateSearch() {
 
     employeeFilter();
 }
+
+// Filters users on page with search bar input
 
 function employeeFilter() {
     search.addEventListener('keyup', (e) => {
@@ -198,6 +204,8 @@ function employeeFilter() {
         }
     })
 }
+
+// Creates error to display when no users are matched in search
 
 function generateError() {
     const error = document.createElement('DIV');
