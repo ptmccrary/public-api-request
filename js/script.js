@@ -1,3 +1,4 @@
+const body = document.querySelector('body');
 const search = document.querySelector('.search-container');
 const gallery = document.getElementById('gallery');
 
@@ -81,7 +82,6 @@ function modalHTML(data, i) {
     modalContainer.innerHTML = modal;
 
     modalSwitch(data, i);
-
     return modalContainer;
 }
 
@@ -126,6 +126,12 @@ function removeModal() {
     const modalContainer = document.querySelector('.modal-container');
     modalContainer.remove();
 }
+
+window.addEventListener('click', (e) => {
+    if(e.target == modalContainer) {
+        modalContainer.remove();
+    }
+});
 
 // Reformat phone number
 
