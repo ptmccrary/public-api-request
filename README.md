@@ -1,6 +1,6 @@
 # Awesome Startup Employee Directory
 
-Makes use of random user Generator API ('https://randomuser.me/') to create an employee directory for a startup company
+Makes use of random user Generator API ('https://randomuser.me/') to create an employee directory for a startup company.
 
 ### CSS Updates
 
